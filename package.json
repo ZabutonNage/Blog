@@ -1,0 +1,12 @@
+{
+  "name": "zabutonnage-blog",
+  "description": "ZabutonNage's Blog",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "vuepress": "^1.0.0-alpha.27"
+  },
+  "author": "ZabutonNage"
+}
