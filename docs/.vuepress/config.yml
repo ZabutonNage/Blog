@@ -1,0 +1,17 @@
+title: ZabutonNage Blog
+description: JavaScript, functional concepts and conventional scepticism
+base: /zn-blog/
+head:
+  - [ link, { rel: icon, href: /favicon-zn.ico } ]
+markdown: { lineNumbers: false }
+navbar: true
+themeConfig:
+  nav:
+    - { text: Home,    link: / }
+    - { text: Blog,    link: /posts/ }
+    - { text: GitHub,  link: https://github.com/ZabutonNage }
+    - { text: Twitter, link: https://twitter.com/ZabutonNage }
+  displayAllHeaders: false
+  sidebarDepth: 1
+  sidebar:
+    /posts/: []
