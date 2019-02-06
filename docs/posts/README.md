@@ -14,6 +14,8 @@ For the time being here is a list of resources that I find relevant to share. Th
 
 If you don't understand JavaScript, learn it properly. Don't make the language adjust to you. Nobody would consider introducing dynamic types to [Haskell](https://www.haskell.org/) just because JavaScript developers are used to them and want to use Haskell now. Or maybe introduce JavaScript's [double-equals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators#Equality) to Java, anyone?
 
+[https://medium.com/javascript-scene/inside-the-dev-team-death-spiral-6a7ea255467b](https://medium.com/javascript-scene/inside-the-dev-team-death-spiral-6a7ea255467b)
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Tllw4EPhLiQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Composing Software by Eric Elliott
