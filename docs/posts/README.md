@@ -1,7 +1,7 @@
 # The Blog Section
 
 ::: tip Note
-At the moment there are no published articles. The first one is expected to be released in January 2019 (this month).
+At the moment there are no published articles. The first one is expected to be released in mid-February 2019.
 
 Please try again later.
 :::
