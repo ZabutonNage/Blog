@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "build": "vuepress build docs && npm run copy-cname",
+    "copy-cname": "copy .\\CNAME .\\docs\\.vuepress\\dist\\"
   },
   "directories": {
     "doc": "docs"
