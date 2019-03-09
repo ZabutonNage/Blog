@@ -1,14 +1,12 @@
 # The Blog Section
 
-::: tip Note
-At the moment there are no published articles. The first one is expected to be released in mid-February 2019.
-
-Please try again later.
+::: tip New article!
+At last! The first article has been published. It talks about implementing optional chaining with plain JavaScript. It gets beefed up with default values and safe function application through monadic structures for an extra smooth developer experience. → [SafeAccess](/posts/2019/SafeAccess)
 :::
 
 ## Some random resources
 
-For the time being here is a list of resources that I find relevant to share. They also give some clues of what you can expect from this blog.
+Here is a list of resources that I find relevant to share. They also give some clues of what you can expect from this blog.
 
 ### JavaScript doesn't need classes
 

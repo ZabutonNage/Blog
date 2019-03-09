@@ -1,7 +1,7 @@
 ---
 meta:
   - name: title
-    content: Oooptional Chaining or SafeAccess for JavaScript
+    content: Optional Chaining or SafeAccess for JavaScript
   - property: author
     content: ZabutonNage
   - name: description
