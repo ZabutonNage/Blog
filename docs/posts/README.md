@@ -6,6 +6,10 @@ At last! The first article has been published. It talks about implementing **opt
 :::
 </expiring-div>
 
+The blog section is exactly what it sounds like. Find published posts in the left navigation. Entries are sorted latest to oldest.
+
+Or take the shortcut: [SafeAccess](/posts/2019/SafeAccess.html).
+
 ## Some random resources
 
 Here is a list of resources that I find relevant to share. They also give some clues of what you can expect from this blog.
