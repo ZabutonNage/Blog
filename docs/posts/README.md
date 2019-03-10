@@ -1,8 +1,10 @@
 # The Blog Section
 
+<expiring-div start="2019-03-11" :days="14">
 ::: tip New article!
-At last! The first article has been published. It talks about implementing optional chaining with plain JavaScript. It gets beefed up with default values and safe function application through monadic structures for an extra smooth developer experience. → [SafeAccess](/posts/2019/SafeAccess)
+At last! The first article has been published. It talks about implementing **optional chaining** with plain JavaScript. It gets beefed up with default values and safe function application through monadic structures for an extra smooth developer experience. → [SafeAccess](/posts/2019/SafeAccess.html)
 :::
+</expiring-div>
 
 ## Some random resources
 
