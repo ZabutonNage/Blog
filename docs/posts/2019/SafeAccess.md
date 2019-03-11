@@ -47,7 +47,7 @@ If you don't and you hit an `undefined` halfway, you get a nasty error message w
 Uncaught TypeError: Cannot read property 'address' of undefined
 ```
 
-As of February 2019, there is a [Stage 1 proposal](https://github.com/tc39/proposal-optional-chaining) that tries to combat this issue. The **optional chaining operator**. Depending on your preferred platform you may know it as _"safe navigation operator"_, _"null-conditional operator"_ or perhaps _"existential operator."_ I have even heard it being called the _"Elvis operator"._ But that only seems to be used among C# folks. Here it goes:
+As of February 2019, there is a [Stage 1 proposal](https://github.com/tc39/proposal-optional-chaining) that tries to combat this issue. The **optional chaining operator**. Depending on your preferred platform you may know it as _"safe navigation operator"_, _"null-conditional operator"_ or perhaps _"existential operator."_ I have even heard it being called the _"Elvis operator"._ But that only seems to be used among C♯ folks. Here it goes:
 ```js
 ?.
 ```
@@ -119,9 +119,6 @@ This isn't getting us anywhere. It seems we would have to introduce more utiliti
 So the proposed optional chaining operator simplifies only part of a common pattern. It is therefore questionable if it is worth introducing new syntax and making the learning curve steeper for beginners. Changing the standard should imply a considerable leap, not just a half-hearted tiny step. Because once it's in the standard, it's hard to get it out again.
 
 **Now let's check out some possibilities we have today and how they are dealing with these shortcomings.**
-
-# TODO check out funfunfunction
-https://www.youtube.com/watch?v=FKRVqtP8o48
 
 ## Your possibilities today
 
@@ -217,9 +214,9 @@ Now it's time to build it ourselves! Let's summarise the requirements:
 
 Considering the requirements of directly accessing properties without ever throwing, and instead returning a `Maybe` container for our requested value, this is what it is going to look like:
 ```js
-return SafeAccess(user).address.street
+SafeAccess(user).address.street
     .map(fetchHousesOnStreet)
-    .fromMaybe(Promise.reject());
+    .fromMaybe(Promise.reject())
 ````
 First, we put the `user` object in the `SafeAccess` context which we are going to explore in a minute. This allows us to natively access any property no matter at what level of nesting. So it is perfectly fine to do something like this:
 ```js
@@ -257,7 +254,7 @@ safeAddress.zip.map(zip => zip.toString()).fromMaybe(`default`)  // `default`
 ```
 
 ::: tip Wow!
-Did you notice that you can store a partly traversed path in a variable and continue later on? Of course you can pass properties wrapped in their _Safe_ context to functions, too. You can't do that with the libraries from the previous section.
+Did you notice that you can store a partly traversed path in a variable and continue later on? Of course you can pass those properties wrapped in their _Safe_ context to functions, too. You can't do that with the libraries from the previous section.
 :::
 
 ### Is this magic?
@@ -344,7 +341,9 @@ As expected, the proxied object `{ foo: "bar" }` and the accessed member `"foo"`
 
 There are three main ways our `get` handler can return. By the special property `map` which returns a function that, when called by the consumer, returns a `Maybe` object. By another special property `fromSafe` that returns a function which allows exiting the _Safe_ context directly. Or, in any other case, by returning another `Proxy`.
 
-Returning another `Proxy` attached with the same handler enables the consumer to access object members at any depth. Only when accessing `map` or `fromSafe` it is possible to exit the _Safe_ context and get a plain value.
+Note that it is our implementation that makes `map` and `fromSafe` special.
+
+Recursively returning another `Proxy` attached with the same handler enables the consumer to access object members at any depth. Only when accessing `map` or `fromSafe` it is possible to exit the _Safe_ context and get a plain value.
 
 While traversing an object's members it is important that we keep track of the current state of validity. For this purpose there are `lastProxyable` and the module-scoped object `invalid`. Let's investigate the handler's recursive part first and see how these two objects work together.
 
@@ -365,13 +364,13 @@ lastProxyable.value = nextVal;
 return new Proxy(lastProxyable, handler);
 ```
 
-There are three branches that all return a new `Proxy`. This means that in the next iteration we will still be in the _Safe_ context. The important difference is the object that we wrap in a `Proxy` before returning.
+There are three branches that all return a new `Proxy`. This means that in the next iteration we will still be in the _Safe_ context. The important difference is the object that we wrap in the `Proxy` before returning.
 
 Let's assume for now the user wants to access a valid property. The first condition evaluates to `false` and we skip to the second. We check if `nextVal` is of type `object`. This is important as `Proxy` cannot be applied to **primitives**! Now if the next value is an object, we can simply wrap it in another `Proxy` and carry on. That is the most trivial case.
 
 In case `nextVal` is NOT an object but a primitive, leading us to the third branch, we can't stick it in a `Proxy`. This would actually cause an exception! But one does not simply return a plain primitive and exit the _Safe_ context either. The end of the context would be unpredictable for the user and it would thus totally defeat the purpose of `SafeAccess`.
 
-The solution is the `lastProxyable` object. It is a regular object. Therefore we can put it in a `Proxy`. We use it as a container for a non-proxyable primitive. At the same time it indicates your last chance to call `map` or `fromSafe` and get a value before going invalid.
+The solution is the `lastProxyable` object. As it is just a regular object, we can put it in a `Proxy`. We use it as a container for a non-proxyable primitive. At the same time it indicates your last chance to call `map` or `fromSafe` and get a value before going invalid.
 
 That being said, let's take a look at the first branch. We can see that trying to access the next value from `lastProxyable` results in an invalid result. Remember that `lastProxyable` was defined outside the `get` trap and that we just passed it to a `Proxy` in the previous iteration. `o` is exactly that object so we can do a convenient check for referential equality. On all further attempts to access another property, `o` will be `invalid`.
 
@@ -392,7 +391,7 @@ get: (o, prop) => {
     /* ... */
 }
 ```
-We simply check if the specified property name matches either of the special functions and, if it does, delegate to the relevant one. Notice that `prop === map.name` is used instead of `prop === "map"`. This ensures that the names of the function and the public property representing it are always in sync. Whenever you rename the `map` function, the property name will reflect it automatically.
+We simply check if the specified property name matches either of the special functions and, if it does, delegate to the relevant one. Notice that `prop === map.name` is used instead of `prop === "map"`. This is a nice way to ensure that the names of the function and the public property representing it are always in sync. Whenever you rename the `map` function, the property name will reflect it automatically.
 
 ##### map
 
@@ -409,7 +408,7 @@ function map(o, lastProxyable) {
     return f => Maybe(f(val));
 }
 ```
-It takes the object `o` to be mapped over and the `lastProxyable` object. We import `Maybe`, a neighbouring module from the same repository `SafeAccess` is in. It's very small, yet we are skipping details here as it is not the focus of this post.
+`map` takes the object `o` to be mapped over and the `lastProxyable` object. We import `Maybe`, a neighbouring module from the same repository `SafeAccess` is in. It's very small but we are skipping details here as it is not the focus of this post.
 
 If `o` turns out to be `invalid`, we immediately return a function that ignores its inputs and yields _Nothing_ in the form of an empty `Maybe` object. This constitutes our requirement of skipping the mapping function when the _Safe_ context is invalid.
 
@@ -420,7 +419,7 @@ SafeAccess(obj).foo.bar.map(mappingFunction)
 
 The next step, if `o` is not `invalid`, is to get the value to map over. In case we already arrived at `lastProxyable`, we have to unwrap it from the container that allowed us to apply `Proxy` even to primitives. Otherwise we just use whatever `o` is.
 
-Here too, we return a function yielding a `Maybe` object. This function takes the user-provided mapping function `f`, applies it to `val` and wraps the result in a `Maybe` object. Even though our value to map over is always valid at this point, we must wrap in a `Maybe` to stay predictable in our results and not suddenly exit the context. Only this way the user can rest assured there will be a reliable result no matter what the outcome is.
+Here too, we return a function yielding a `Maybe` object. This function takes the user-provided mapping function `f`, applies it to `val` and wraps the result in a `Maybe` object. Even though our value to map over is always valid at this point, we must wrap it in a `Maybe` to stay predictable in our results and not suddenly exit the context. Only this way the user can rest assured there will be a reliable result no matter what the outcome is.
 
 ##### fromSafe
 
@@ -433,11 +432,11 @@ function fromSafe(o, lastProxyable) {
             : o;
 }
 ```
-`fromSafe` has the purpose to exit the _Safe_ context directly. As mentioned earlier, the user has to provide a default value. This is an important feature to avoid inconvenient `undefined` values being returned. Something the proposed optional chaining operator lacks entirely.
-
 `fromSafe` works in a very similar fashion to `map`. Same inputs. Returns a function.
 
-The returned function's input `val` is the default value specified by the user. Whenever the object `fromSafe` was called on is invalid, that default value is returned. If it's valid, just like in `map`, we return the relevant value considering it might be wrapped in `lastProxyable`.
+It has the purpose to exit the _Safe_ context directly. As mentioned earlier, the user has to provide a default value. This is an important feature in order to avoid inconvenient `undefined` values being returned. Something the proposed optional chaining operator lacks entirely.
+
+The returned function's input `val` is the default value specified by the user. Whenever the object `fromSafe` was called on is invalid, that default value is returned. If the object is valid, just like in `map`, we return the relevant value considering it might be wrapped in `lastProxyable`.
 
 ## Closing words
 
