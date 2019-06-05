@@ -450,6 +450,11 @@ You can find the source code for `SafeAccess` and `Maybe` on GitHub in a reposit
 [https://github.com/ZabutonNage/fUtility](https://github.com/ZabutonNage/fUtility)
 :::
 
+::: tip Note
+This article refers to the initial version of `SafeAccess` [c1240080](https://github.com/ZabutonNage/fUtility/commit/c1240080f740fdc612c9de0e36c1890eb55efec1)  
+Meanwhile, it has been updated. Make sure to check out the latest version!
+:::
+
 So before hopping on the train for another lame feature proposal, do some experimenting. Try to find the JavaScript way! It's indeed fun and sometimes eye-opening! Many proposals, it seems, try to avoid exactly that and aim for allowing developers to stick with their non-JS habits.
 
 So don't waste your time on redundant proposals. Use it to discover the **brilliance of JavaScript!**
