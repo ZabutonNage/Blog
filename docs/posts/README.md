@@ -1,14 +1,14 @@
 # The Blog Section
 
-<expiring-div start="2019-03-11" :days="14">
+<expiring-div start="2020-05-01" :days="14">
 ::: tip New article!
-At last! The first article has been published. It talks about implementing **optional chaining** with plain JavaScript. It gets beefed up with default values and safe function application through monadic structures for an extra smooth developer experience. → [SafeAccess](/posts/2019/SafeAccess.html)
+It's been a while since the last post. But now it's time to end the argument of _single quotes vs double quotes_. → [One Tick To Rule Them All](/posts/2020/Backticks.html)
 :::
 </expiring-div>
 
 The blog section is exactly what it sounds like. Find published posts in the left navigation. Entries are sorted latest to oldest.
 
-Or take the shortcut: [SafeAccess](/posts/2019/SafeAccess.html).
+Or take the shortcut to the latest post: [One Tick To Rule Them All](/posts/2020/Backticks.html)
 
 ## Some random resources
 

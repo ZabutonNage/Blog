@@ -15,4 +15,5 @@ themeConfig:
   sidebarDepth: 1
   sidebar:
     /posts/:
+      - [2020/Backticks, One Tick To Rule Them All]
       - [2019/SafeAccess, SafeAccess]
